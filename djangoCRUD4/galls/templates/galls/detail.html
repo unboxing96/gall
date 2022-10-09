@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>detail</h1>
+
+  <section>
+    <h3>{{gall.title}}</h3>
+    <p>{{gall.user_id}}
+      |
+      {{gall.created_at}}</p>
+  </section>
+  <hr>
+  <section>
+    <p>{{gall.content}}</p>
+  </section>
+
+  {% comment %} 메인 {% endcomment %}
+  <button class="btn btn-secondary">
+    <a href="{% url "galls:index" %}" class="text-decoration-none text-white">전체글</a>
+  </button>
+
+  {% comment %} 수정 {% endcomment %}
+  <button class="btn btn-primary">
+    <a href="{% url "galls:update" gall.pk %}" class="text-decoration-none text-white">수정</a>
+  </button>
+
+  {% comment %} 삭제 {% endcomment %}
+  <button type="button" class="btn btn-danger">
+    <a href="{% url "galls:delete" gall.pk %}" class="text-decoration-none text-white">삭제</a>
+</button>
+  
+
+{% endblock content %}

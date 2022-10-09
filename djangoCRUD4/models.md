@@ -3,6 +3,7 @@
 ## 기본 필드
 - 글 번호: `pk`
 - 제목: `title`: CharField
+- 내용: `content`: TextField
 - 유저: `user_id`: CharField
 - 유저 비번: `user_pw`: CharField ??
 - 작성일: `created_at`: auto_now_add
