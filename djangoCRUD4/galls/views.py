@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from .forms import GallForm, SelectForm
+from .forms import GallForm
 from .models import Gall
 
 # Create your views here.
