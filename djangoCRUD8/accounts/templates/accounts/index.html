@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <div class="form">
+    <h1>회원 목록</h1>
+    <div class="row justify-content-center">
+      {% for user in users %}
+        <div>
+          <a href="{% url 'accounts:detail' user.pk %}">
+            {{ user.username }}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <a href="{% url 'accounts:index' %}">돌아가기</a>
+  </div>
+{% endblock body %}
