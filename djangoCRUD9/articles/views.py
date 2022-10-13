@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ArticleForm
 from .models import Article
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -11,6 +12,7 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = ArticleForm(request.POST)
@@ -32,3 +34,25 @@ def detail(request, pk):
         "article": article,
     }
     return render(request, "articles/detail.html", context)
+
+
+@login_required
+def delete(request, pk):
+    Article.objects.get(pk=pk).delete()
+    return redirect("articles:index")
+
+
+@login_required
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect("articles:detail", article.pk)
+    else:
+        form = ArticleForm(instance=article)
+    context = {
+        "form": form,
+    }
+    return render(request, "articles/create.html", context)

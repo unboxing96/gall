@@ -2,7 +2,13 @@
 
 {% block body %}
   <h1>index</h1>
+  <div class="btn btn-secondary">
+    <a href="../" class="text-decoration-none text-white">
+      메인
+    </a>
+  </div>
 
+  {% comment %} 테이블 {% endcomment %}
   <table class="table mt-5">
     <thead class="table-dark">
       <tr>
@@ -25,4 +31,20 @@
       {% endfor %}
     </tbody>
   </table>
+
+  {% if request.user.is_authenticated %}
+  <div class="btn btn-primary">
+    <a href="{% url 'articles:create' %}" class="text-decoration-none text-white">
+      글 작성
+    </a>
+  </div>
+  {% else %}
+  <div class="btn btn-primary">
+    <a href="{% url 'accounts:login' %}" class="text-decoration-none text-white">
+      Login to Write
+    </a>
+  </div>
+  {% endif %}
+
+
 {% endblock body %}

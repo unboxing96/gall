@@ -14,7 +14,26 @@
 
   <body>
     <section class="container my-5">
-      {% block body %}{% endblock body %}
+      
+      {% if request.user.is_authenticated %}
+      <h3>{{ user }}</h3>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="로그아웃">
+      </form>
+      <a href="{% url 'accounts:update' %}">회원정보 수정</a>
+      <a href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
+
+      {% else %}
+      {% comment %} 회원가입 {% endcomment %}
+      <a href="{% url 'accounts:signup' %}">회원가입</a>
+      <a href="{% url 'accounts:login' %}">로그인</a>
+
+      {% endif %}
+      <hr>
+
+      {% block body %}
+      {% endblock body %}
     </section>
   </body>
 

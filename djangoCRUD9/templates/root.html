@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>
+    <a href="{% url 'articles:index' %}" class="btn btn-outline-primary">
+      articles
+    </a>
+    <a href="{% url 'accounts:index' %}" class="btn btn-outline-primary">
+      accounts
+    </a>
+  </h1>
+{% endblock body %}
