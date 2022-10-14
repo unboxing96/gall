@@ -13,9 +13,7 @@
     <tbody>
       {% for user in users %}
         <tr>
-          <td>
-            <a href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a>
-          </td>
+          <td>{{ user.username }}</td>
           <td>{{ user.email }}</td>
         </tr>
       {% endfor %}

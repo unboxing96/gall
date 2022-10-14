@@ -29,7 +29,13 @@
   </table>
 
   {% comment %} 버튼 {% endcomment %}
+  {% if request.user.is_authenticated %}
   <a href="{% url 'articles:create' %}">
     글 작성
   </a>
+  {% else %}
+  <a href="{% url 'articles:create' %}">
+    글 작성
+  </a>
+  {% endif %}
 {% endblock body %}
