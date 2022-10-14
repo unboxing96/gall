@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>accounts index</h1>
+
+  <table class="table mt-5">
+    <thead class="table-dark">
+      <tr>
+        <th>이름</th>
+        <th>메일 주소</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>
+            <a href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a>
+          </td>
+          <td>{{ user.email }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock body %}
