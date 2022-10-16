@@ -1,29 +1,32 @@
-{% load static %}
-{% load django_bootstrap5 %}
+{% load static %} {% load django_bootstrap5 %}
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   {% bootstrap_css %}
 </head>
 
 <body>
   {% comment %} 네비게이션 {% endcomment %}
-
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
+
       <a class="navbar-brand" href="#">Navbar</a>
+      <span class="postion-absolute mt-2 ms-3">
+        <h6>{{ user }}</h6>
+      </span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav position-relative">
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/articles/">Articles</a>
           </li>
@@ -50,12 +53,27 @@
     </div>
   </nav>
 
-
   {% comment %} 메인 {% endcomment %}
   <section class="container mt-5">
-    {% block body %}{% endblock body %}
-    {% bootstrap_javascript %}
+    {% block body %}{% endblock body %} 
+
+    {% comment %} 검색창 {% endcomment %}
+    {% block search_bar %}
+    <form action="{% url 'articles:search' %}" method="GET">
+      <select name="search">
+        <option value="user_name">작성자</option>
+        <option value="title">제목</option>
+        <option value="content">내용</option>
+        <input name="keyword">
+        <input type="submit" value="검색">
+      </select>
+    </form>
+    {% endblock search_bar %}
+    
+    <script>{% bootstrap_javascript %}</script>
   </section>
+
+
 </body>
 
 </html>
