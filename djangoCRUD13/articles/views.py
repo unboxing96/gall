@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Article
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -30,12 +30,11 @@ def create(request):
 
 def detail(request, pk):
     article = Article.objects.get(pk=pk)
-    print("==================")
-    print(article.image)
-    print(article.image.url)
-    print("==================")
+    comment_form = CommentForm()
     context = {
         "article": article,
+        "comments": article.comment_set.all(),
+        "comment_form": comment_form,
     }
     return render(request, "articles/detail.html", context)
 
@@ -61,3 +60,13 @@ def update(request, pk):
         "form": form,
     }
     return render(request, "articles/update.html", context)
+
+
+def comment_create(request, pk):
+    article = Article.objects.get(pk=pk)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.article = article
+        comment.save()
+    return redirect("articles:detail", article.pk)
