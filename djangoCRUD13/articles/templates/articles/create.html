@@ -3,7 +3,7 @@
 
 {% block body %}
   <h1>create</h1>
-  <form action="" method="POST">
+  <form action="" method="POST" enctype="multipart/form-data">
     {% bootstrap_form form %}
     {% csrf_token %}
     <input type="submit" value="OK">
