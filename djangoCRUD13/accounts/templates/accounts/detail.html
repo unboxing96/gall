@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>{{ user.username }}님의 프로필</h1>
+  <p>이메일:{{ user.email }}</p>
+  <div>
+    <a href="{% url 'accounts:index' %}">돌아가기</a>
+  </div>
+{% endblock body %}
