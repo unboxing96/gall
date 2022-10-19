@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h5>글 번호:
+    {{ article.pk }}</h5>
+  <h1>제목:
+    {{ article.title }}</h1>
+  <h6>생성 일자:
+    {{ article.created_at }}</h6>
+  <p>내용:
+    {{ article.content }}</p>
+
+  {% comment %} 버튼 {% endcomment %}
+  <button class="btn btn-secondary mt-5">
+    <a href="{% url 'articles:index' %}" class="text-white text-decoration-none">
+      메인
+    </a>
+  </button>
+  <button class="btn btn-primary mt-5">
+    <a href="{% url 'articles:update' article.pk %}" class="text-white text-decoration-none">
+      수정
+    </a>
+  </button>
+  <button class="btn btn-danger mt-5">
+    <a href="{% url 'articles:delete' article.pk %}" class="text-white text-decoration-none">
+      삭제
+    </a>
+  </button>
+{% endblock body %}
