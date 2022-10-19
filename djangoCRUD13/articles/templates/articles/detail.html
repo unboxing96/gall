@@ -6,8 +6,8 @@
     {{ article.pk }}</h5>
   <h1>제목:
     {{ article.title }}</h1>
-  <h5>제목:
-    {{ article.username }}
+  <h5>작성자:
+    {{ article.user }}
     |
     {{ article.created_at }}</h5>
   <p>{{ article.content }}</p>
@@ -15,21 +15,6 @@
   {% if article.image %}
     <img src="{{ article.image.url }}" alt="">
   {% endif %}
-
-  <hr class="my-5">
-
-  {% for comment in comments %}
-    <p>{{ comment.username }} | {{ comment.content }}</p>
-    <hr>
-    {% empty %}
-    <p>댓글이 없습니다.</p>
-  {% endfor %}
-
-  <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
-    {% bootstrap_form comment_form layout="inline" %}
-    {% csrf_token %}
-    {% bootstrap_button button_type="submit" content="등록" button_class="btn-primary" %}
-  </form>
 
 {% comment %} 버튼 {% endcomment %}
   <div class="mt-5">
@@ -51,5 +36,21 @@
       </a>
     </button>
   </div>
+
+  <h3 class="mt-5">댓글</h3>
+  <hr class="mb-5">
+
+  {% for comment in comments %}
+    <p>{{ comment.username }} | {{ comment.content }}</p>
+    <hr>
+    {% empty %}
+    <p>댓글이 없습니다.</p>
+  {% endfor %}
+
+  <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+    {% bootstrap_form comment_form layout="inline" %}
+    {% csrf_token %}
+    {% bootstrap_button button_type="submit" content="등록" button_class="btn-primary" %}
+  </form>
 
 {% endblock body %}

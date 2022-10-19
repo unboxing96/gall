@@ -3,6 +3,17 @@
 {% block body %}
   <h1>{{ user.username }}님의 프로필</h1>
   <p>이메일:{{ user.email }}</p>
+  <hr>
+  <h3>작성한 글 목록</h3>
+  <p class="text-muted">작성한 글:
+    {{ user.article_set.count }}개</p>
+  {% for article in user.article_set.all %}
+    <p>
+      <a href="{% url 'articles:detail' article.pk %}">
+        {{ article.title }}
+      </a>
+    </p>
+  {% endfor %}
   <div>
     <a href="{% url 'accounts:index' %}">돌아가기</a>
   </div>

@@ -1,7 +1,7 @@
 from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from traitlets import default
+from django.conf import settings
 
 # Create your models here.
 class Article(models.Model):
@@ -15,6 +15,10 @@ class Article(models.Model):
         processors=[ResizeToFill(400, 300)],
         format="JPEG",
         options={"quality": 80},
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
     )
 
 
