@@ -8,6 +8,7 @@
       <tr>
         <th>글 번호</th>
         <th>제목</th>
+        <th>작성자</th>
         <th>생성 일자</th>
       </tr>
     </thead>
@@ -19,6 +20,7 @@
             <a href="{% url 'articles:detail' article.pk %}">
               {{ article.title }}</a>
           </td>
+          <td>{{ article.user }}</td>
           <td>{{ article.created_at }}</td>
         </tr>
       {% endfor %}

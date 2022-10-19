@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 
 {% block body %}
   <h5>글 번호:
@@ -10,20 +11,56 @@
   <p>내용:
     {{ article.content }}</p>
 
-  {% comment %} 버튼 {% endcomment %}
-  <button class="btn btn-secondary mt-5">
-    <a href="{% url 'articles:index' %}" class="text-white text-decoration-none">
-      메인
-    </a>
-  </button>
-  <button class="btn btn-primary mt-5">
-    <a href="{% url 'articles:update' article.pk %}" class="text-white text-decoration-none">
-      수정
-    </a>
-  </button>
-  <button class="btn btn-danger mt-5">
-    <a href="{% url 'articles:delete' article.pk %}" class="text-white text-decoration-none">
-      삭제
-    </a>
-  </button>
+  <hr class="mt-5">
+  <h3>댓글</h3>
+  
+  {% comment %} 댓글창 {% endcomment %}
+  <div class="mt-5">
+  {% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.created_at }}</p>
+    <hr>
+    {% empty %}
+    <p>no comments</p>
+  {% endfor %}
+  </div>
+
+  <form action="{% url 'articles:comment_create' article.pk %}" method="POST" class="mt-5">
+    {% bootstrap_form comment_form layout="inline" %}
+    {% csrf_token %}
+    <div class="d-flex justify-content-end mt-3">
+      {% comment %} 댓글_등록 {% endcomment %}
+      {% bootstrap_button button_type="submit" content="등록" button_class="btn-primary" %}
+        {% comment %} 댓글_삭제 {% endcomment %}
+
+
+
+
+
+
+
+
+        
+    </div>
+  </form>
+
+
+    {% comment %} 버튼 {% endcomment %}
+    <hr class="mt-5">
+    <button class="btn btn-secondary">
+      <a href="{% url 'articles:index' %}" class="text-white text-decoration-none">
+        메인
+      </a>
+    </button>
+    <button class="btn btn-primary">
+      <a href="{% url 'articles:update' article.pk %}" class="text-white text-decoration-none">
+        수정
+      </a>
+    </button>
+    <button class="btn btn-danger">
+      <a href="{% url 'articles:delete' article.pk %}" class="text-white text-decoration-none">
+        삭제
+      </a>
+    </button>
+
 {% endblock body %}
