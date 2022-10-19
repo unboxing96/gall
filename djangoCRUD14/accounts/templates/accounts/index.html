@@ -2,4 +2,26 @@
 
 {% block body %}
   <h1>accounts index</h1>
+
+  {% comment %} 테이블 {% endcomment %}
+  <table class="table mt-5">
+    <thead class="table-dark">
+      <tr>
+        <th>글 번호</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>생성 일자</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.date_joined }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock body %}
