@@ -23,7 +23,7 @@ def detail(request, pk):
 
 
 def signup(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect("accounts:index")
 
     if request.method == "POST":

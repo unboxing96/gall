@@ -66,15 +66,18 @@ def update(request, pk):
 @login_required
 def comment_create(request, pk):
     article = Article.objects.get(pk=pk)
-    comment_form = CommentForm(request.POST)
+    comment_form = CommentForm(request.POST, request.user)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         comment.article = article
+        comment.user = request.user
         comment.save()
     return redirect("articles:detail", article.pk)
 
 
 @login_required
 def comment_delete(request, article_pk, comment_pk):
-    Comment.objects.get(pk=comment_pk).delete()
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment.delete()
     return redirect("articles:detail", article_pk)

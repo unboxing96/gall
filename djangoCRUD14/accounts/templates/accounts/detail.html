@@ -11,25 +11,39 @@
     {{ user.date_joined }}</p>
 
   <hr class="mt-5">
+  <h4>작성한 댓글:
+    {{user.comment_set.count }}개
+  </h4>
+
+  {% for comment in user.comment_set.all %}
+    <h6>{{ comment.content }}
+      -
+      <a href="{% url 'articles:detail' comment.article.pk %}" class="text-decoration-none">{{ comment.article.title }}</a>
+    </h6>
+  {% endfor %}
+
+  <hr class="mt-5">
   <button class="btn btn-secondary">
     <a href="{% url 'accounts:index' %}" class="text-white text-decoration-none">
       메인
     </a>
   </button>
-  <button class="btn btn-primary">
-    <a href="{% url 'accounts:update' %}" class="text-white text-decoration-none">
-      수정
-    </a>
-  </button>
-  <button class="btn btn-info">
-    <a href="{% url 'accounts:password_change' %}" class="text-white text-decoration-none">
-      비밀번호 변경
-    </a>
-  </button>
-  <button class="btn btn-danger">
-    <a href="{% url 'accounts:delete' %}" class="text-white text-decoration-none">
-      삭제
-    </a>
-  </button>
+  {% if request.user == user %}
+    <button class="btn btn-primary">
+      <a href="{% url 'accounts:update' %}" class="text-white text-decoration-none">
+        수정
+      </a>
+    </button>
+    <button class="btn btn-info">
+      <a href="{% url 'accounts:password_change' %}" class="text-white text-decoration-none">
+        비밀번호 변경
+      </a>
+    </button>
+    <button class="btn btn-danger">
+      <a href="{% url 'accounts:delete' %}" class="text-white text-decoration-none">
+        삭제
+      </a>
+    </button>
+  {% endif %}
 
 {% endblock body %}
