@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>accounts index</h1>
+  <h1>회원 목록</h1>
 
   {% comment %} 테이블 {% endcomment %}
   <table class="table mt-5">
@@ -17,7 +17,7 @@
       {% for user in users %}
         <tr>
           <td>{{ user.id }}</td>
-          <td>{{ user.username }}</td>
+          <td><a href="{% url 'accounts:detail' user.id %}">{{ user.username }}</a></td>
           <td>{{ user.email }}</td>
           <td>{{ user.date_joined }}</td>
         </tr>
