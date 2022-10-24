@@ -10,6 +10,28 @@
   <p>생성 일자:
     {{ user.date_joined }}</p>
 
+
+
+
+
+
+  {% comment %} 좋아요 {% endcomment %}
+  <h4>좋아요 한 게시글:
+    {{ user.like_articles.count }}개
+  </h4>
+
+  {% for like_article in user.like_articles.all %}
+  <h6>
+    <a href="{% url 'articles:detail' like_article.pk %}">{{ like_article.title }}</a>
+  </h6>
+  {% endfor %}
+
+
+
+
+
+
+  {% comment %} 댓글 {% endcomment %}
   <hr class="mt-5">
   <h4>작성한 댓글:
     {{user.comment_set.count }}개
@@ -22,6 +44,8 @@
     </h6>
   {% endfor %}
 
+
+  {% comment %} 버튼 {% endcomment %}
   <hr class="mt-5">
   <button class="btn btn-secondary">
     <a href="{% url 'accounts:index' %}" class="text-white text-decoration-none">

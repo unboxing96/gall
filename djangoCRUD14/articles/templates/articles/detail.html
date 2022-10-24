@@ -11,6 +11,14 @@
   <p>내용:
     {{ article.content }}</p>
 
+  {% comment %} 좋아요 {% endcomment %}
+  <div class="mt-5">
+    <h3>
+      <a href="{% url 'articles:like' article.pk %}">좋아요: {{ article.like_users.count }}개</a>
+    </h3>
+  </div>
+
+
   <hr class="mt-5">
   <h3>
     댓글: {{ article.comment_set.count }}개
@@ -37,7 +45,7 @@
           </button>
 
         <!-- 요청과 댓글의 user 일치X = 모달 -->
-        {% else %}
+        {% else %}00
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             삭제
