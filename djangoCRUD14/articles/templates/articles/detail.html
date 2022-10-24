@@ -21,7 +21,7 @@
 
   <hr class="mt-5">
   <h3>
-    댓글: {{ article.comment_set.count }}개
+    댓글: {{ article.comment_set.count }}개개
   </h3>
   
   {% comment %} 댓글창 {% endcomment %}
@@ -45,7 +45,7 @@
           </button>
 
         <!-- 요청과 댓글의 user 일치X = 모달 -->
-        {% else %}
+        {% else %}00
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             삭제
