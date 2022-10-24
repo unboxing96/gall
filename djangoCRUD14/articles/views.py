@@ -118,3 +118,12 @@ def search(request):
         "page_range": page_range,
     }
     return render(request, "articles/search.html", context)
+
+
+def like(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.user in article.like_users.all():
+        article.like_users.remove(request.user)
+    else:
+        article.like_users.add(request.user)
+    return redirect("articles:detail", article_pk)

@@ -11,6 +11,14 @@
   <p>내용:
     {{ article.content }}</p>
 
+  {% comment %} 좋아요 {% endcomment %}
+  <div class="mt-5">
+    <h3>
+      <a href="{% url 'articles:like' article.pk %}">좋아요: {{ article.like_users.count }}개</a>
+    </h3>
+  </div>
+
+
   <hr class="mt-5">
   <h3>
     댓글: {{ article.comment_set.count }}개
