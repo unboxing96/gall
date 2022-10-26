@@ -14,23 +14,50 @@
   {% comment %} 좋아요 {% endcomment %}
   <div class="mt-5">
     <h3>
-      <a href="{% url 'articles:like' article.pk %}">좋아요: {{ article.like_users.count }}개</a>
+      <a href="{% url 'articles:like' article.pk %}" class="text-decoration-none">
+        {% if request.user in article.like_users.all %}
+          <span><i class="bi bi-hand-thumbs-up-fill"></i></span> 
+        {% else %}
+          <span><i class="bi bi-hand-thumbs-up"></i></span> 
+        {% endif %}
+      </a>
+        <p class="d-inline">: 
+        {% if article.like_users.count == 0 %}
+          좋아요를 눌러주세요.
+        {% elif article.like_users.count == 1 %}
+          {{ article.like_users.all.0 }} 님이 좋아합니다.
+        {% else %}
+          {{ article.like_users.all.0 }} 외 {{ article.like_users.count |add:-1 }}명</p>
+          {{ new_user }}
+        {% endif %}
     </h3>
   </div>
 
 
+  {% comment %} 댓글 {% endcomment %}
   <hr class="mt-5">
   <h3>
     댓글: {{ article.comment_set.count }}개
   </h3>
   
-  {% comment %} 댓글창 {% endcomment %}
+  {% comment %} 댓글 목록 {% endcomment %}
   <div class="mt-5">
   {% for comment in comments %}
     <div class="d-flex justify-content-between">
       <div>
         <p>{{ comment.content }}</p>
-        <p><a href="{% url 'accounts:detail' comment.user.pk %}">{{ comment.user }}</a> | {{ comment.created_at }}</p>
+        <p>
+          <a href="{% url 'accounts:detail' comment.user.pk %}">{{ comment.user }}</a> 
+          | {{ comment.created_at }} | 
+          <a href="{% url "articles:comment_like" article.pk comment.pk %}" class="text-decoration-none">
+            {% if request.user in comment.like_comment_users.all %}
+              <span><i class="bi bi-hand-thumbs-up-fill"></i></span>
+            {% else %}
+              <span><i class="bi bi-hand-thumbs-up"></i></span>
+            {% endif %}
+          </a>
+          : {{ comment.like_comment_users.count }}
+        </p>
       </div>
       <div>
 
@@ -45,7 +72,7 @@
           </button>
 
         <!-- 요청과 댓글의 user 일치X = 모달 -->
-        {% else %}00
+        {% else %}
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             삭제

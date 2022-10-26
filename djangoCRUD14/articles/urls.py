@@ -17,4 +17,9 @@ urlpatterns = [
     ),
     path("search/", views.search, name="search"),
     path("<int:article_pk>/like/", views.like, name="like"),
+    path(
+        "<int:article_pk>/comment/<int:comment_pk>/like",
+        views.comment_like,
+        name="comment_like",
+    ),
 ]
