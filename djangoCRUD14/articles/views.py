@@ -120,10 +120,21 @@ def search(request):
     return render(request, "articles/search.html", context)
 
 
+@login_required
 def like(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.user in article.like_users.all():
         article.like_users.remove(request.user)
     else:
         article.like_users.add(request.user)
+    return redirect("articles:detail", article_pk)
+
+
+@login_required
+def comment_like(request, article_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user in comment.like_comment_users.all():
+        comment.like_comment_users.remove(request.user)
+    else:
+        comment.like_comment_users.add(request.user)
     return redirect("articles:detail", article_pk)

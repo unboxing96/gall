@@ -16,13 +16,14 @@
 
 
   {% comment %} 좋아요 {% endcomment %}
+  <hr class="mt-5">
   <h4>좋아요 한 게시글:
     {{ user.like_articles.count }}개
   </h4>
 
   {% for like_article in user.like_articles.all %}
   <h6>
-    <a href="{% url 'articles:detail' like_article.pk %}">{{ like_article.title }}</a>
+    <a href="{% url 'articles:detail' like_article.pk %}" class="text-decoration-none">{{ like_article.title }}</a>
   </h6>
   {% endfor %}
 
