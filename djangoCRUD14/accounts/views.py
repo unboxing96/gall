@@ -4,6 +4,9 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.views.decorators.http import require_http_methods, require_POST
+from django.http import JsonResponse
+
 
 # Create your views here.
 def index(request):
@@ -15,9 +18,9 @@ def index(request):
 
 
 def detail(request, pk):
-    user = get_user_model().objects.get(pk=pk)
+    person = get_user_model().objects.get(pk=pk)
     context = {
-        "user": user,
+        "person": person,
     }
     return render(request, "accounts/detail.html", context)
 
@@ -92,3 +95,29 @@ def password_change(request):
         "form": form,
     }
     return render(request, "accounts/password_change.html", context)
+
+
+@require_POST
+def follow(request, user_pk):
+    if request.user.is_authenticated:
+        User = get_user_model()
+        person = User.objects.get(pk=user_pk)
+        if person != request.user:  # 프로필 페이지 유저 != 요청을 보낸 유저
+            if person.followers.filter(
+                pk=request.user.pk
+            ).exists():  # 프로필 페이지 유저를 팔로우 하는 목록에, 요청 보낸 유저 아이디 있으면
+                person.followers.remove(request.user)  # 팔로우 취소
+                is_followed = False
+
+            else:  # 없으면
+                person.followers.add(request.user)
+                is_followed = True
+
+            context = {
+                "is_followed": is_followed,
+                "followers_count": person.followers.count(),
+                "followings_count": person.followings.count(),
+            }
+            return JsonResponse(context)
+        return redirect("accounts:detail", person.username)
+    return redirect("accounts:login")
