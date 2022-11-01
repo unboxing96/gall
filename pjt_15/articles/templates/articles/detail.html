@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 
 {% block body %}
   <h1>detail</h1>
@@ -8,7 +9,7 @@
       {{ article.pk }}</h6>
     <h1>제목:
       {{ article.title }}</h1>
-    <h6>{{ article.title }}
+    <h6>{{ article.user }}
       |
       {{ article.created_at }}</h6>
 
@@ -26,14 +27,33 @@
 
   <hr class="mt-5">
 
+  <form action="{% url "articles:comment_create" article.pk %}" method="POST">
+    {% bootstrap_form comment_form %}
+    {% csrf_token %}
+    <input type="submit" value="OK">
+  </form>
+
+  <div class="mt-5">
+    {% for comment in comments %}
+      {{ comment.article.user }}
+      |
+      {{ comment.content }}
+      <hr>
+    {% endfor %}
+  </div>
+
+  <hr class="mt-5">
+
   <div class="btn btn-secondary">
     <a href="{% url "articles:index" %}" class="text-decoration-none text-white">메인</a>
   </div>
-  <div class="btn btn-primary">
-    <a href="{% url "articles:edit" article.pk %}" class="text-decoration-none text-white">수정</a>
-  </div>
-  <div class="btn btn-danger">
-    <a href="{% url "articles:delete" article.pk %}" class="text-decoration-none text-white">삭제</a>
-  </div>
+  {% if request.user == article.user %}
+    <div class="btn btn-primary">
+      <a href="{% url "articles:edit" article.pk %}" class="text-decoration-none text-white">수정</a>
+    </div>
+    <div class="btn btn-danger">
+      <a href="{% url "articles:delete" article.pk %}" class="text-decoration-none text-white">삭제</a>
+    </div>
+  {% endif %}
 
 {% endblock body %}
