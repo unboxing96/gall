@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>detail</h1>
+
+  <div class="mt-5">
+    <h6>글 번호:
+      {{ article.pk }}</h6>
+    <h1>제목:
+      {{ article.title }}</h1>
+    <h6>{{ article.title }}
+      |
+      {{ article.created_at }}</h6>
+
+    {% if article.image %}
+      <div class="mt-5">
+        <img src="{{ article.image.url }}">
+      </div>
+    {% endif %}
+
+    <div class="mt-5">
+      <p>{{ article.content }}</p>
+    </div>
+
+  </div>
+
+  <hr class="mt-5">
+
+  <div class="btn btn-secondary">
+    <a href="{% url "articles:index" %}" class="text-decoration-none text-white">메인</a>
+  </div>
+  <div class="btn btn-primary">
+    <a href="{% url "articles:edit" article.pk %}" class="text-decoration-none text-white">수정</a>
+  </div>
+  <div class="btn btn-danger">
+    <a href="{% url "articles:delete" article.pk %}" class="text-decoration-none text-white">삭제</a>
+  </div>
+
+{% endblock body %}

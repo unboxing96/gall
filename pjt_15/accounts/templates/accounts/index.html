@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>accounts index</h1>
+
+  <table class="table mt-5">
+    <thead class="table-dark">
+      <tr>
+        <td>유저 번호</td>
+        <td>이름</td>
+        <td>가입 일자</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.pk }}</td>
+          <td>
+            <a href="{% url 'accounts:detail' user.pk %}" class="text-decoration-none">
+              {{ user.username }}</a>
+          </td>
+          <td>{{ user.date_joined }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-end">
+
+    {% if request.user.is_authenticated %}
+      <div class="btn btn-danger">
+        <a href="{% url 'accounts:logout' %}" class="text-decoration-none text-white">로그아웃</a>
+      </div>
+
+    {% else %}
+      <div class="btn btn-primary">
+        <a href="{% url 'accounts:signup' %}" class="text-decoration-none text-white">회원 가입</a>
+      </div>
+      <div class="btn btn-success">
+        <a href="{% url 'accounts:login' %}" class="text-decoration-none text-white">로그인</a>
+      </div>
+
+    {% endif %}
+  </div>
+{% endblock body %}

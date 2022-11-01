@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>detail</h1>
+
+  <div class="mt-5">
+    <h6>유저 번호:
+      {{ user.pk }}</h6>
+    <h1>닉네임:
+      {{ user.username }}</h1>
+    <h6>생성 일자:
+      {{ user.date_joined }}</h6>
+
+    {% if user.image %}
+      <div class="mt-5">
+        <img src="{{ user.image.url }}">
+      </div>
+    {% endif %}
+
+    <div class="mt-5">
+      <p>{{ user.content }}</p>
+    </div>
+
+  </div>
+
+  <hr class="mt-5">
+
+  <div class="btn btn-secondary">
+    <a href="{% url "accounts:index" %}" class="text-decoration-none text-white">메인</a>
+  </div>
+  {% if request.user == user %}
+    <div class="btn btn-primary">
+      <a href="{% url "accounts:edit" %}" class="text-decoration-none text-white">수정</a>
+    </div>
+    <div class="btn btn-primary opacity-50">
+      <a href="{% url "accounts:password_change" %}" class="text-decoration-none text-white">비밀번호 변경</a>
+    </div>
+    <div class="btn btn-danger">
+      <a href="{% url "accounts:delete" %}" class="text-decoration-none text-white">삭제</a>
+    </div>
+  {% endif %}
+
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1 class="text-center">루트 페이지</h1>
+
+  <div class="d-flex justify-content-evenly mt-5">
+    <div class="btn btn-primary">
+      <a href="{% url 'accounts:index' %}" class="text-white text-decoration-none">
+        회원 목록
+      </a>
+    </div>
+    <div class="btn btn-success">
+      <a href="{% url 'articles:index' %}" class="text-white text-decoration-none">
+        게시글 목록
+      </a>
+    </div>
+  </div>
+{% endblock body %}
