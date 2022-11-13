@@ -46,14 +46,20 @@
     </nav>
 
     {% comment %} 알림창 {% endcomment %}
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-
+    {% autoescape off %}
+      <div class="mx-5">
+        {% if messages %}
+        <ul class="messages" style="list-style-type: none;">
+            {% for message in messages %}
+            <li class="alert alert-success">
+              {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    {% endautoescape %}
+    
 
     <div class="container mt-5">
       {% block body %}{% endblock body %}

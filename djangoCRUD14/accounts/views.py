@@ -98,8 +98,8 @@ def signup(request):
             activateEmail(request, user, form.cleaned_data.get("email"))
             return redirect("accounts:index")
         else:
-            for error in list(form.errors.values()):
-                messages.error(request.error)
+            for err in list(form.errors.values()):
+                messages.error(request, err)
     else:
         form = CustomUserCreationForm()
     context = {
